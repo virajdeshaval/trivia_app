@@ -17,7 +17,7 @@ def create_app(test_config=None):
   @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
   '''
   CORS(app)
-  # CORS(app, resources={r"*/api/*": {'origins': '*'}})
+  # CORS(app, resources={r"/*/api/*": {'origins': '*'}})
   '''
   @TODO: Use the after_request decorator to set Access-Control-Allow
   '''
@@ -25,15 +25,14 @@ def create_app(test_config=None):
   def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-
+    response.headers.add('Access-Control-Allow-Origin', '/*/v2/*')
     return response
   '''
   @TODO: 
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
-  @app.route('/')
+  @app.route('/api/v1.0/hello')
   def hello():
     return jsonify({
       'message': 'Hello World!'
