@@ -1,7 +1,7 @@
 import os
 from flask import Flask, json, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import random
 
 from models import setup_db, Question, Category
@@ -16,8 +16,7 @@ def create_app(test_config=None):
   '''
   @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
   '''
-  CORS(app)
-  # CORS(app, resources={r"/*/api/*": {'origins': '*'}})
+  CORS(app, resources={r"/*/api/*": {"origins": "*"}})
   '''
   @TODO: Use the after_request decorator to set Access-Control-Allow
   '''
@@ -25,14 +24,15 @@ def create_app(test_config=None):
   def after_request(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
-    response.headers.add('Access-Control-Allow-Origin', '/*/v2/*')
     return response
+
   '''
   @TODO: 
   Create an endpoint to handle GET requests 
   for all available categories.
   '''
-  @app.route('/api/v1.0/hello')
+  @app.route('/hello')
+  @cross_origin()
   def hello():
     return jsonify({
       'message': 'Hello World!'
